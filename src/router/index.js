@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import PickAvator from "../views/forms/PickAvator.vue";
 import PickBirth from "../views/forms/PickBirth.vue";
 import PickInfo from "../views/forms/PickInfo.vue";
 import PickPhone from "../views/forms/PickPhone.vue";
@@ -10,6 +11,7 @@ import Main from "../views/Main.vue";
 import Me from "../views/Me.vue";
 import Query from "../views/Query.vue";
 import Register from "../views/Register.vue";
+
 const routes = [
     { 
       path: "/", 
@@ -64,6 +66,10 @@ const routes = [
     {
       path: "/me/pick_info",
       component: PickInfo
+    },
+    {
+      path: "/me/pick_avator",
+      component: PickAvator
     }
 
   ]

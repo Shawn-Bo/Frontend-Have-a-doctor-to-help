@@ -112,47 +112,47 @@ const logout = () => {
     
 <template>
     <div class="page" style="background-color: rgb(250, 250, 250); ">
-
         <SearchBar></SearchBar>
         <div class="body">
 
-            <div class="photo" v-if="userinfo.avatar!==null">
-                <nut-avatar size="120" :icon="userinfo.avatar">
+            <div class="photo" v-if="userinfo.avatar !== null">
+                <nut-avatar size="120" :icon="userinfo.avatar" @click="() => { router.push('/me/pick_avator') }">
                 </nut-avatar>
             </div>
             <div class="photo" v-else>
-                <nut-avatar size="120" icon="https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg">
+                <nut-avatar size="120" icon="https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg"
+                    @click="() => { router.push('/me/pick_avator') }">
                 </nut-avatar>
             </div>
             <!-- TODO: 使用picker输入一些数据 -->
             <nut-cell-group title="个人信息" desc="">
                 <nut-cell title="用户名" :desc="userinfo.name">
                 </nut-cell>
-                <nut-cell title="性别" :desc="userinfo.sex===null?'是个秘密':(userinfo.sex===0?'女生':'男生')">
+                <nut-cell title="性别" :desc="userinfo.sex === null ? '是个秘密' : (userinfo.sex === 0 ? '女生' : '男生')">
                     <template v-slot:link>
-                        <nut-icon name="right" @click="() => { show_picker_sex = true;}"></nut-icon>
+                        <nut-icon name="right" @click="() => { show_picker_sex = true; }"></nut-icon>
                     </template>
                 </nut-cell>
-                <nut-cell title="生日" :desc="userinfo.birthday===null?'是个秘密':(userinfo.birthday)">
+                <nut-cell title="生日" :desc="userinfo.birthday === null ? '是个秘密' : (userinfo.birthday)">
                     <template v-slot:link>
-                        <nut-icon name="right" @click="()=>{
+                        <nut-icon name="right" @click="() => {
                             router.push('/me/pick_birth');
                         }"></nut-icon>
                     </template>
                 </nut-cell>
-                <nut-cell title="地区" :desc="userinfo.region===null?'是个秘密':(userinfo.region)">
+                <nut-cell title="地区" :desc="userinfo.region === null ? '是个秘密' : (userinfo.region)">
                     <template v-slot:link>
-                        <nut-icon name="right" @click="() => { show_picker_region = true;}"></nut-icon>
+                        <nut-icon name="right" @click="() => { show_picker_region = true; }"></nut-icon>
                     </template>
                 </nut-cell>
-                <nut-cell title="电话号码" :desc="userinfo.phone===null?'是个秘密':(userinfo.phone)" @click="()=>{
+                <nut-cell title="电话号码" :desc="userinfo.phone === null ? '是个秘密' : (userinfo.phone)" @click="() => {
                     router.push('/me/pick_phone');
                 }">
                     <template v-slot:link>
                         <nut-icon name="right"></nut-icon>
                     </template>
                 </nut-cell>
-                <nut-cell title="个性签名" :desc="userinfo.info===null?'不足为外人道也':(userinfo.info)" @click="()=>{
+                <nut-cell title="个性签名" :desc="userinfo.info === null ? '不足为外人道也' : (userinfo.info)" @click="() => {
                     router.push('/me/pick_info');
                 }">
                     <template v-slot:link>

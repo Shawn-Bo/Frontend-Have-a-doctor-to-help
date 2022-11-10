@@ -10,7 +10,7 @@ let message_box = ref(null);
 // router.query即可接收参数
 let new_session_start_question = ref(router.query.question);
 let session_to_show = ref(get_session_temp());
-
+let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
 let back = function () {
   history.back();
 }
@@ -78,17 +78,16 @@ const send_message = () => {
     <div class="body" ref="message_box">
       <div v-for="message in session_to_show.session_messages" :key="message.message_id">
         <div class="message">
-          <div v-if="message.message_sender==='robot'">
+          <div v-if="message.message_sender === 'robot'">
             <div
               style="position: relative; left: 50%;width:max-content;transform: translate(-50%, 0);background-color: rgb(250, 250, 250);">
               {{ message.message_time }}
             </div>
             <div class="left_message_box">
-
-
               <div class="avatar_box">
-                <img
-                  src="https://img.ixintu.com/download/jpg/202008/24e3630a27f1b68d120b5bd190d6df92_610_610.jpg!con" />
+                <nut-avatar size="60" shape="square"
+                  icon="https://img.ixintu.com/download/jpg/202008/24e3630a27f1b68d120b5bd190d6df92_610_610.jpg!con">
+                </nut-avatar>
               </div>
               <div class="left_strings">
                 {{ message.message_text }}
@@ -105,8 +104,8 @@ const send_message = () => {
                 {{ message.message_text }}
               </div>
               <div class="avatar_box">
-                <img
-                  src="https://ts1.cn.mm.bing.net/th/id/R-C.fa34c682b9190593e6347585985afaca?rik=88aUDJLcAwKe6g&riu=http%3a%2f%2fimg.crcz.com%2fallimg%2f202002%2f13%2f1581564603288571.jpg&ehk=vJrjygNpXbip1dAkVimg4oKpuXWVHGdw70FpsfTYd68%3d&risl=&pid=ImgRaw&r=0" />
+                <nut-avatar size="60" :icon="avatar_url" shape="square">
+                </nut-avatar>
               </div>
 
             </div>
