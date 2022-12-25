@@ -2,19 +2,29 @@
 import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
+import { user_get } from "../apis/me.js";
 import { query_delete_export_session, query_publish_session } from "../apis/query.js";
 const route = useRoute();
 const router = useRouter();
-let messageText = ref("");
 let message_box = ref(null);
 // route.query即可接收参数
-let session_to_show = ref(JSON.parse(route.query.session_json));
+let public_session_item = JSON.parse(route.query.public_session_item)
+let session_to_show = ref(public_session_item["session_detail"]);
+// 从用户名获取用户头像
 
-let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
+// 暂时先用原本的
+
+
+let avatar_url = ref("");
+let username = public_session_item["username"];
+user_get(username).then((res) => {
+  if (res["code"] === "success") {
+    avatar_url.value = res["info"]["avatar"];
+  }
+});
 let back = function () {
   history.back();
 }
-let username = localStorage.getItem("username");
 
 
 // 公开问诊单
@@ -93,10 +103,11 @@ const delete_session = function () {
 
       </div>
       <!-- 占位置，确保最后一个消息框可以完全显示 -->
-      <div style="height:20px;"></div>
+      <div style="height:100px;"></div>
     </div>
+    <nut-button class="button above_footer" type="info" @click="like_session"> 🤓涨知识了，赞一个🤓 </nut-button>
 
-    <nut-button class="button footer" type="primary" @click="delete_session"> 删除问诊单 </nut-button>
+    <nut-button class="button footer" type="danger" @click="dislike_session"> 🥱平平无奇，下一个🥱 </nut-button>
 
   </div>
 </template>
@@ -146,7 +157,14 @@ const delete_session = function () {
 
 .footer {
   position: absolute;
-  bottom: 0px;
+  bottom: 5px;
+  padding: 0px;
+  height: 50px;
+}
+
+.above_footer {
+  position: absolute;
+  bottom: 65px;
   padding: 0px;
   height: 50px;
 }

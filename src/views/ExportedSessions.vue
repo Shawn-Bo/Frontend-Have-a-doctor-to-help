@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { query_get_exported_sessions } from "../apis/query.js";
-const route = useRoute();
 const router = useRouter();
 
 // 返回到上一页
@@ -53,7 +52,6 @@ const go_query_session_detail = function (index) {
         <div class="session_item_card">
           <h3 style="text-align: center;">
             {{ session_item["session_messages"][0]["message_text"].slice(0, 16) }}</h3>
-
           <nut-cell-group title="">
             <nut-cell icon="order" title="编号：" :desc="session_item['session_id']"></nut-cell>
             <nut-cell icon="service" title="追问："

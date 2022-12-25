@@ -12,6 +12,7 @@ import Main from "../views/Main.vue";
 import Me from "../views/Me.vue";
 import Query from "../views/Query.vue";
 import QuerySessionDetail from "../views/QuerySessionDetail.vue";
+import PublicSessionDetail from "../views/QueryPublicSessionDetail.vue"
 import Register from "../views/Register.vue";
 const routes = [
     { 
@@ -80,6 +81,10 @@ const routes = [
     {
       path: "/query/session_detail",
       component: QuerySessionDetail
+    },
+    {
+      path: "/query/public_session_detail",
+      component: PublicSessionDetail
     }
 
 
