@@ -2,68 +2,22 @@
 import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
-import { query_export_session, query_get_session, query_go_session, query_new_session } from "../apis/query.js";
-import { get_session_temp } from "../apis/session.js";
+import { query_delete_export_session, query_export_session } from "../apis/query.js";
 const route = useRoute();
 const router = useRouter();
 let messageText = ref("");
 let message_box = ref(null);
 // route.query即可接收参数
-let new_session_start_question = ref(route.query.question);
-let session_to_show = ref(get_session_temp());
+let session_to_show = ref(JSON.parse(route.query.session_json));
+
 let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
 let back = function () {
   history.back();
 }
 let username = localStorage.getItem("username");
-query_new_session(username).then((res) => {
-  if (res["code"] === "success") {
-    // 成功创建了新的会话
-    let new_session_id = res["session_id"];
-    localStorage.setItem("session_id", new_session_id);
-    // 追加新会话的内容
-    query_go_session(username, new_session_id, { "message_id": 0, message_sender: username, "message_text": new_session_start_question.value }).then((res) => {
-      if (res["code"] === "success") {
-        // 成功追加对话
-        query_get_session(username, new_session_id).then((res) => {
-          if (res["code"] === "success") {
-            session_to_show.value = JSON.parse(res["session"]);
-          } else {
-            Notify.warn("会话获取失败");
-          }
-        });
-      } else {
-        Notify.warn("会话追加失败");
-      }
-    });
 
-  } else {
-    Notify.warn("会话创建失败");
-  }
-});
-// 发送聊天
-const send_message = () => {
-  // 追加新会话的内容
-  query_go_session(username, session_to_show.value.session_id, { "message_id": session_to_show.value.session_messages.length, message_sender: username, "message_text": messageText.value }).then((res) => {
-    if (res["code"] === "success") {
-      // 成功追加对话
-      query_get_session(username, session_to_show.value.session_id).then((res) => {
-        if (res["code"] === "success") {
-          session_to_show.value = JSON.parse(res["session"]);
-          messageText.value = ""; // 清空输入栏
 
-          setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
-        } else {
-          Notify.warn("会话获取失败");
-        }
-      });
-    } else {
-      Notify.warn("会话追加失败");
-    }
-  });
-}
-
-// 导出问诊单
+// 公开问诊单
 const export_session = function () {
   query_export_session(username, session_to_show.value.session_id).then((res) => {
     if (res["code"] === "success") {
@@ -74,6 +28,17 @@ const export_session = function () {
     }
   });
 };
+
+const delete_session = function () {
+  query_delete_export_session(username, session_to_show.value.session_id).then((res) => {
+    if (res["code"] === "success") {
+      history.back();
+      Notify.success("问诊单删除成功", { duration: 500 });
+    } else {
+      Notify.warn("问诊单删除失败");
+    }
+  });
+}
 
 </script>
       
@@ -86,7 +51,7 @@ const export_session = function () {
       </div>
       <h2>快速问诊</h2>
       <div class="icon_top_right">
-        <nut-icon name="message" size="24"></nut-icon>
+        <nut-icon name="share" size="24"></nut-icon>
       </div>
     </div>
     <div class="body" ref="message_box">
@@ -130,23 +95,8 @@ const export_session = function () {
       <!-- 占位置，确保最后一个消息框可以完全显示 -->
       <div style="height:20px;"></div>
     </div>
-    <div class="footer">
-      <nut-searchbar v-model="messageText" @keyup.enter.native="send_message">
-        <template v-slot:leftout>
-          <nut-icon name="star" @click="export_session"></nut-icon>
-        </template>
-        <template v-slot:rightin>
-          <nut-icon size="20" name="microphone"></nut-icon>
-        </template>
-        <template v-slot:rightout>
-          <nut-icon name="top" @click="send_message"></nut-icon>
-        </template>
-      </nut-searchbar>
-    </div>
 
-
-
-
+    <nut-button class="button footer" type="primary" @click="delete_session"> 删除问诊单 </nut-button>
 
   </div>
 </template>
@@ -168,7 +118,7 @@ const export_session = function () {
 
 .button {
   /* width: fit-content; */
-  width: 100%;
+  width: 80%;
   margin-left: 50%;
   transform: translate(-50%, 0);
   /* border:1px solid red; */
@@ -195,18 +145,15 @@ const export_session = function () {
 }
 
 .footer {
-  width: 100%;
   position: absolute;
   bottom: 0px;
-  left: 0px;
   padding: 0px;
-  margin: 0px;
   height: 50px;
 }
 
 .page {
   overflow: auto;
-  height: 95vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }

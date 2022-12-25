@@ -19,7 +19,7 @@ const confirm = () => {
   user_edit_phone(localStorage.getItem("username"), new_phone).then((res) => {
     if (res["code"] === "success") {
       phone.value = new_phone;
-      Notify.success("修改成功");
+      Notify.success("修改成功", { duration: 500 });
       history.back();
     }
   });

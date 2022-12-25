@@ -65,6 +65,22 @@ export const query_export_session = async function(username, session_id){
   return res;
 }
 
+// 返回用户名对应的所有sessions为一个列表
+export const query_get_exported_sessions = async function(username){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"/query/get_exported_sessions",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      username: username
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}
+
 export const query_get_export_session = async function(username, exported_session_id){
   let res;
   await axios({

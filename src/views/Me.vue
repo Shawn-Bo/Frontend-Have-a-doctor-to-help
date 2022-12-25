@@ -163,7 +163,8 @@ const logout = () => {
 
             <nut-cell-group title="更多功能" desc="">
                 <nut-grid :column-num="3">
-                    <nut-grid-item icon="comment" text="我的问诊单"></nut-grid-item>
+                    <nut-grid-item icon="comment" text="我的问诊单"
+                        @click="router.push('/exported_sessions')"></nut-grid-item>
                     <nut-grid-item icon="order" text="我的预约单"></nut-grid-item>
                     <nut-grid-item icon="shop" text="我的处方单"></nut-grid-item>
                 </nut-grid>

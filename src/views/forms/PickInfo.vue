@@ -19,7 +19,7 @@ const confirm = () => {
   user_edit_info(localStorage.getItem("username"), new_info).then((res) => {
     if (res["code"] === "success") {
       info.value = new_info;
-      Notify.success("修改成功");
+      Notify.success("修改成功", { duration: 500 });
       history.back();
     }
   });
