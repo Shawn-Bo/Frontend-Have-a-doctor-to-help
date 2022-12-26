@@ -59,7 +59,7 @@ const delete_session = function () {
       <div class="icon_left">
         <nut-icon name="left" @click="back" size="20"></nut-icon>
       </div>
-      <h2>快速问诊</h2>
+      <h2>热门问诊</h2>
       <div class="icon_top_right">
         <nut-icon name="share" size="24" @click="publish_session"></nut-icon>
       </div>

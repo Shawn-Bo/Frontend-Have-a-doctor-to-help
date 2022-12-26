@@ -59,8 +59,8 @@ const go_query_public_session_detail = function (index) {
 
             <nut-button type="primary" class="button" @click="go_query_public_session_detail(index)">查看详情</nut-button>
           </div>
-
         </div>
+        
       </div>
     </div>
   </div>

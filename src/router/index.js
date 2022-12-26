@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import ExportedSessions from "../views/ExportedSessions.vue";
+import AsADoctor from "../views/forms/AsADoctor.vue";
 import PickAvator from "../views/forms/PickAvator.vue";
 import PickBirth from "../views/forms/PickBirth.vue";
 import PickInfo from "../views/forms/PickInfo.vue";
@@ -11,8 +12,8 @@ import Login from "../views/Login.vue";
 import Main from "../views/Main.vue";
 import Me from "../views/Me.vue";
 import Query from "../views/Query.vue";
+import PublicSessionDetail from "../views/QueryPublicSessionDetail.vue";
 import QuerySessionDetail from "../views/QuerySessionDetail.vue";
-import PublicSessionDetail from "../views/QueryPublicSessionDetail.vue"
 import Register from "../views/Register.vue";
 const routes = [
     { 
@@ -85,6 +86,10 @@ const routes = [
     {
       path: "/query/public_session_detail",
       component: PublicSessionDetail
+    },
+    {
+      path: "/as_a_doctor",
+      component: AsADoctor
     }
 
 

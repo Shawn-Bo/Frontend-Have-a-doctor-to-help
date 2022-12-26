@@ -40,6 +40,15 @@ const delete_session = function () {
   });
 }
 
+const go_inquery = function () {
+  router.push({
+    path: "/inquary",
+    query: {
+      "exported_session": session_to_show.value.session_id
+    }
+  })
+}
+
 </script>
       
 <template>
@@ -95,6 +104,7 @@ const delete_session = function () {
       <!-- 占位置，确保最后一个消息框可以完全显示 -->
       <div style="height:20px;"></div>
     </div>
+    <nut-button class="button above_footer" type="info" @click="go_inquery"> 👨‍⚕️继续问医生👩‍⚕️ </nut-button>
 
     <nut-button class="button footer" type="primary" @click="delete_session"> 删除问诊单 </nut-button>
 
@@ -246,6 +256,13 @@ const delete_session = function () {
   position: absolute;
   top: 16px;
   right: 0px;
+}
+
+.above_footer {
+  position: absolute;
+  bottom: 65px;
+  padding: 0px;
+  height: 50px;
 }
 </style>
       

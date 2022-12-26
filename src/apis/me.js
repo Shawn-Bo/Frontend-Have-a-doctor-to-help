@@ -109,3 +109,24 @@ export const user_edit_avatar = async function(username, avatar){
   }).catch((error) => console.error("请求超时"));
   return res;
 }
+
+export const certified_as_a_doctor = async function(username, real_name, career_year, hospital, post, good_at, wechat){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"user/certified_as_a_doctor",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      username: username,
+      real_name: real_name,
+      career_year: career_year,
+      hospital: hospital,
+      post: post,
+      good_at: good_at,
+      wechat: wechat
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}

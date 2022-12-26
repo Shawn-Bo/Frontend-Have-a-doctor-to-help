@@ -108,6 +108,17 @@ const logout = () => {
     router.push("/login");
 }
 
+// 认证为医生
+const go_certified_as_a_doctor = function () {
+    // 获取用户名
+    let username = localStorage.getItem('username')
+    // 跳转到医生认证页面
+    router.push({
+        path: "/as_a_doctor",
+        query: { username: username }
+    });
+}
+
 </script>
     
 <template>
@@ -167,6 +178,7 @@ const logout = () => {
                         @click="router.push('/exported_sessions')"></nut-grid-item>
                     <nut-grid-item icon="order" text="我的预约单"></nut-grid-item>
                     <nut-grid-item icon="shop" text="我的处方单"></nut-grid-item>
+                    <nut-grid-item icon="people" text="医生认证" @click="go_certified_as_a_doctor"></nut-grid-item>
                 </nut-grid>
             </nut-cell-group>
             <nut-button type="danger" class="button" @click="logout">退出登录</nut-button>
