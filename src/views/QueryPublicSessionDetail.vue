@@ -3,7 +3,7 @@ import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
 import { user_get } from "../apis/me.js";
-import { query_delete_export_session, query_publish_session } from "../apis/query.js";
+import { mark_publish_session, query_delete_export_session } from "../apis/query.js";
 const route = useRoute();
 const router = useRouter();
 let message_box = ref(null);
@@ -28,15 +28,23 @@ let back = function () {
 
 
 // 公开问诊单
-const publish_session = function () {
-  query_publish_session(username, session_to_show.value.session_id).then((res) => {
+const mark_session = function () {
+  let app_username = localStorage.getItem("username");
+  mark_publish_session(app_username, session_to_show.value.session_id).then((res) => {
     if (res["code"] === "success") {
-      router.push("/home");
-      Notify.success("会话分享成功", { duration: 500 });
+      Notify.success("问答收藏成功", { duration: 500 });
     } else {
-      Notify.warn("会话分享失败");
+      Notify.warn("问答收藏失败");
     }
   });
+};
+
+const like_session = function () {
+
+};
+
+const dislike_session = function () {
+
 };
 
 const delete_session = function () {
@@ -61,7 +69,7 @@ const delete_session = function () {
       </div>
       <h2>热门问诊</h2>
       <div class="icon_top_right">
-        <nut-icon name="share" size="24" @click="publish_session"></nut-icon>
+        <nut-icon name="star" size="24" @click="mark_session"></nut-icon>
       </div>
     </div>
     <div class="body" ref="message_box">
