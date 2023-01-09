@@ -15,6 +15,7 @@ import Query from "../views/Query.vue";
 import PublicSessionDetail from "../views/QueryPublicSessionDetail.vue";
 import QuerySessionDetail from "../views/QuerySessionDetail.vue";
 import Register from "../views/Register.vue";
+import UserInquaryDetail from "../views/UserInquaryDetail.vue";
 const routes = [
     { 
       path: "/", 
@@ -90,6 +91,9 @@ const routes = [
     {
       path: "/as_a_doctor",
       component: AsADoctor
+    },{
+      path: "/inquary/detail_user",
+      component: UserInquaryDetail
     }
 
 

@@ -1,12 +1,12 @@
 <script setup>
 import { Notify } from "@nutui/nutui";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { get_doctors } from "../apis/doctor.js";
 import SearchBar from '../components/SearchBar.vue';
 
-const use_route = useRoute();
-
+const route = useRoute();
+const router = useRouter();
 let doctor_dict_list = ref("")
 get_doctors().then((res) => {
     if (res["code"] === "success") {
@@ -16,11 +16,24 @@ get_doctors().then((res) => {
         Notify.warn("请求失败");
     }
 });
-let exported_session_picked = use_route.query["exported_session"];
+let exported_session_picked = route.query["exported_session"];
 
 const go_query_public_doctor_detail = function (index) {
     if (exported_session_picked === undefined) {
         Notify.warn("请先按照提示选择导出的问诊单！", { duration: 1000 })
+    } else {
+        // 在这里开始求助医生业务
+        // 也就是呆着医生信息和用户信息，跳转到一个新的聊天页面
+
+        router.push({
+            path: "/inquary/detail_user",
+            query: {
+                picked_session_id: exported_session_picked,
+                picked_doctor_id:
+                    doctor_dict_list.value[index].username
+
+            }
+        });
     }
 }
 

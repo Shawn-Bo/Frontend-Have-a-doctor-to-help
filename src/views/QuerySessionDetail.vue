@@ -50,7 +50,7 @@ const go_inquery = function () {
 }
 
 </script>
-      
+
 <template>
   <div class="page" style="background-color: rgb(250, 250, 250); ">
     <div class="title_forzen">
@@ -102,7 +102,7 @@ const go_inquery = function () {
 
       </div>
       <!-- 占位置，确保最后一个消息框可以完全显示 -->
-      <div style="height:20px;"></div>
+      <div style="min-height:120px;"></div>
     </div>
     <nut-button class="button above_footer" type="info" @click="go_inquery"> 👨‍⚕️继续问医生👩‍⚕️ </nut-button>
 
@@ -110,7 +110,7 @@ const go_inquery = function () {
 
   </div>
 </template>
-      
+
 <style scoped>
 .title {
   width: fit-content;
@@ -265,4 +265,3 @@ const go_inquery = function () {
   height: 50px;
 }
 </style>
-      

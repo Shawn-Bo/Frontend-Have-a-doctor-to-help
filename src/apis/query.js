@@ -31,12 +31,46 @@ export const query_get_session = async function(username, session_id){
   }).catch((error) => console.error("请求超时"));
   return res;
 }
+
+
+export const query_get_exported_session = async function(session_id){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"query/get_exported_session",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      session_id: session_id,
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}
+
 //{"username": string, "session_id":string, "query_message":{"message_id": int, message_sender:string, "message_time": string, "message_text": string}}
 export const query_go_session = async function(username, session_id, query_message){
   let res;
   await axios({
     method: "post",
     url: base_url+"query/go_session",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      username: username,
+      session_id: session_id,
+      query_message: query_message
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}
+
+export const query_go_exported_session = async function(username, session_id, query_message){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"query/go_exported_session",
     timeout: 4000, // 请求4秒无响应则会超时
     data: {
       username: username,
