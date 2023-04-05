@@ -2,60 +2,52 @@
 import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
-import { query_export_session, query_get_session, query_go_session, query_new_session } from "../apis/query.js";
+import { query_export_session, query_get_exported_session, query_go_exported_session, update_doctor_inquery } from "../apis/query.js";
 import { get_session_temp } from "../apis/session.js";
 const route = useRoute();
 const router = useRouter();
 let messageText = ref("");
 let message_box = ref(null);
 // route.query即可接收参数
-let new_session_start_question = ref(route.query.question);
+let picked_session_id = ref(route.query.picked_session_id).value;
+let picked_doctor_id = ref(route.query.picked_doctor_id).value;
+// 获取已有的session
 let session_to_show = ref(get_session_temp());
 let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
 let back = function () {
+
+  clearInterval(message_interval);
   history.back();
 }
-let username = localStorage.getItem("username");
-query_new_session(username).then((res) => {
-  if (res["code"] === "success") {
-    // 成功创建了新的会话
-    let new_session_id = res["session_id"];
-    localStorage.setItem("session_id", new_session_id);
-    // 追加新会话的内容
-    query_go_session(username, new_session_id, { "message_id": 0, message_sender: username, "message_text": new_session_start_question.value }).then((res) => {
-      if (res["code"] === "success") {
-        // 成功追加对话
-        query_get_session(username, new_session_id).then((res) => {
-          console.log(res)
-          if (res["code"] === "success") {
-            session_to_show.value = JSON.parse(res["session"]);
-          } else {
-            Notify.warn("会话获取失败");
-          }
-        });
-      } else {
-        Notify.warn("会话追加失败");
-      }
-    });
+let username = localStorage.getItem("username"); // 获取用户名
 
-  } else {
-    Notify.warn("会话创建失败");
-  }
-});
+function get_exported_session() {
+  query_get_exported_session(picked_session_id).then((res) => {
+    // console.log(res)
+    if (res["code"] === "success") {
+      session_to_show.value = JSON.parse(res["session_json"]);
+    } else {
+      Notify.warn("消息发送失败");
+    }
+  })
+}
+
+get_exported_session();
+let message_interval = setInterval(get_exported_session, 1000);
 // 发送聊天
 const send_message = () => {
+  // 现在追加的消息不会立刻寻求回复
   // 追加新会话的内容
-  query_go_session(username, session_to_show.value.session_id, { "message_id": session_to_show.value.session_messages.length, message_sender: username, "message_text": messageText.value }).then((res) => {
+  query_go_exported_session(username, session_to_show.value.session_id, { "message_id": session_to_show.value.session_messages.length, message_sender: username, "message_text": messageText.value }).then((res) => {
     if (res["code"] === "success") {
       // 成功追加对话
-      query_get_session(username, session_to_show.value.session_id).then((res) => {
+      messageText.value = "";
+      get_exported_session();  // 快速获取一次
+      update_doctor_inquery(picked_doctor_id, session_to_show.value.session_id, "not_viewed").then((res) => {
         if (res["code"] === "success") {
-          session_to_show.value = JSON.parse(res["session"]);
-          messageText.value = ""; // 清空输入栏
-
-          setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
+          // 说明医生那边有未查看通知了
         } else {
-          Notify.warn("会话获取失败");
+          Notify.warn("会话状态修改失败");
         }
       });
     } else {
@@ -77,7 +69,7 @@ const export_session = function () {
 };
 
 </script>
-      
+
 <template>
   <div class="page" style="background-color: rgb(250, 250, 250); ">
     <div class="title_forzen">
@@ -151,7 +143,7 @@ const export_session = function () {
 
   </div>
 </template>
-      
+
 <style scoped>
 .title {
   width: fit-content;
@@ -302,4 +294,3 @@ const export_session = function () {
   right: 0px;
 }
 </style>
-      

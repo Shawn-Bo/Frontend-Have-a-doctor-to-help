@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { register_new_user } from "../apis/register.js";
 import imgUrl from "../assets/logo.png";
-
+import { password_is_valid, username_is_valid } from "../utils/util_data_validation.js";
 
 const router = useRouter();
 let username = ref("");
@@ -12,6 +12,21 @@ let password = ref("");
 let checked = ref(false);
 
 const register = function () {
+  if (!username_is_valid(username.value)) {
+    Notify.warn("用户名不能为空，且只能由字母、数字、汉字组成！");
+    return;
+  }
+
+  if (!password_is_valid(password.value)) {
+    Notify.warn("密码至少长8位，且必须包含大小写字母、数字和特殊字符！");
+    return;
+  }
+
+  if (!checked.value) {
+    Notify.warn("请先阅读并同意服务协议和隐私保护协议！");
+    return;
+  }
+
   register_new_user(username.value, password.value).then(
     (res) => {
       if (res["code"] === "success") {
@@ -21,10 +36,6 @@ const register = function () {
       }
     });
 };
-
-const switch_checked = () => {
-  checked = !checked;
-}
 
 </script>
   
@@ -49,7 +60,7 @@ const switch_checked = () => {
         </nut-form-item>
       </nut-form>
       <div class="agreement">
-        <nut-switch v-model="checked" @click="switch_checked" />
+        <nut-switch v-model="checked" />
         <small>
           我已阅读并同意
           <router-link to="/">服务协议</router-link>

@@ -2,7 +2,10 @@
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { query_get_public_sessions } from "../apis/query.js";
+import HomeCard from "../components/HomeCard.vue";
 import SearchBar from '../components/SearchBar.vue';
+
+
 let router = useRouter();
 let session_list = ref([]);
 query_get_public_sessions().then((res) => {
@@ -19,7 +22,6 @@ const go_query_public_session_detail = function (index) {
     path: "/query/public_session_detail",
     query: { public_session_item: JSON.stringify(public_session_item) }
   });
-
 }
 
 
@@ -28,7 +30,7 @@ const go_query_public_session_detail = function (index) {
 <template>
   <div class="page" style="background-color: rgb(250, 250, 250); ">
     <div class="title_forzen">
-      <h1>热门问诊</h1>
+      <h1>♨️热门问诊</h1>
       <div class="icon_top_right">
         <nut-icon name="message" size="24"></nut-icon>
       </div>
@@ -41,26 +43,16 @@ const go_query_public_session_detail = function (index) {
       </div>
       <div class="body_session_list">
         <div v-for="session_item, index in session_list">
-          <div class="session_item_card">
-            <h3 style="text-align: center;">
-              {{ session_item['session_detail']["session_messages"][0]["message_text"].slice(0, 16) }}</h3>
-            <nut-cell-group title="">
-              <nut-cell icon="order" title="知主：" :desc="session_item['username']"></nut-cell>
-              <nut-cell icon="service" title="追问："
-                :desc="session_item['session_detail']['session_messages'][session_item['session_detail']['session_messages'].length - 2]['message_text'].slice(0, 16)"></nut-cell>
-              <nut-cell icon="eye" title="始于："
-                :desc="session_item['session_detail']['session_messages'][session_item['session_detail']['session_messages'].length - 2]['message_time']"></nut-cell>
-              <nut-cell icon="marshalling" title="止于"
-                :desc="session_item['session_detail']['session_messages'][0]['message_time']"></nut-cell>
-              <nut-cell icon="comment" title="轮次："
-                :desc="String(session_item['session_detail']['session_messages'].length)"></nut-cell>
-            </nut-cell-group>
-
-
-            <nut-button type="primary" class="button" @click="go_query_public_session_detail(index)">查看详情</nut-button>
-          </div>
+          <HomeCard class="cards"
+            :card_title="session_item['session_detail']['session_messages'][0]['message_text'].slice(0, 16)"
+            :avatar="session_item['avatar']" :username="session_item['username']"
+            :start_time="session_item['session_detail']['session_messages'][0]['message_time']"
+            :end_time="session_item['session_detail']['session_messages'][session_item['session_detail']['session_messages'].length - 2]['message_time']"
+            :epoch_num="session_item['session_detail']['session_messages'].length"
+            :card_preview="session_item['session_detail']['session_messages'][1]['message_text']"
+            @on-query-detail="go_query_public_session_detail(index)">
+          </HomeCard>
         </div>
-        
       </div>
     </div>
   </div>
@@ -71,18 +63,8 @@ const go_query_public_session_detail = function (index) {
   overflow-x: hidden;
   overflow-y: auto;
   height: 92vh;
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
-}
-
-
-
-.button {
-  /* width: fit-content; */
-  width: 80%;
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-  /* border:1px solid red; */
+  display: flex;
+  flex-direction: column;
 }
 
 .title_forzen {
@@ -137,29 +119,8 @@ const go_query_public_session_detail = function (index) {
   /* border: 1px solid red; */
 }
 
-
-.session_item_card {
-  margin-top: 20px;
-  background-color: white;
-  border-top: gray solid 2px;
-  border-right: gray solid 2px;
-  border-bottom: gray solid 1px;
-  border-left: gray solid 1px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  padding-bottom: 15px;
-  padding-top: 15px;
-
-}
-
-.session_list {
-  position: relative;
-  margin-top: 10px;
-  width: 90%;
-
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-
-  /* border: 1px red solid; */
+.cards {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 </style>

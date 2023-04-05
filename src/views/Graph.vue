@@ -1,12 +1,15 @@
 <script setup>
+import KnowledgeGraph from '../components/KnowledgeGraph.vue';
 import SearchBar from '../components/SearchBar.vue';
+
+
 </script>
 
 <template>
     <div class="page" style="background-color: rgb(250, 250, 250); ">
 
         <div class="title_forzen">
-            <h1>查看图谱</h1>
+            <h1>🧿查看图谱</h1>
             <div class="icon_top_right">
                 <nut-icon name="message" size="24"></nut-icon>
             </div>
@@ -14,14 +17,10 @@ import SearchBar from '../components/SearchBar.vue';
         <div class="searchbar_forzen">
             <SearchBar></SearchBar>
         </div>
-        <div style="height: 160px;"></div>
+
         <!-- 下面是一堆各种各样的卡片 -->
-        <div class="body">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <div class="graph">
+            <KnowledgeGraph></KnowledgeGraph>
         </div>
 
     </div>
@@ -32,14 +31,14 @@ import SearchBar from '../components/SearchBar.vue';
     overflow: auto;
     height: 92vh;
     display: -webkit-flex;
-    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 
 .title_forzen {
     position: relative;
     left: 5%;
     width: 90%;
-    height: 80px;
+    height: 100px;
     /* border: 1px solid red; */
 }
 
@@ -81,5 +80,11 @@ import SearchBar from '../components/SearchBar.vue';
 .body {
     height: auto;
     overflow: scroll;
+}
+
+.graph {
+    margin: 0px;
+    padding: 0px;
+    height: 75vh;
 }
 </style>

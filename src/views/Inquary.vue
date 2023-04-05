@@ -3,7 +3,9 @@ import { Notify } from "@nutui/nutui";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { get_doctors } from "../apis/doctor.js";
+import DoctorCard from "../components/DoctorCard.vue";
 import SearchBar from '../components/SearchBar.vue';
+
 
 const route = useRoute();
 const router = useRouter();
@@ -38,12 +40,10 @@ const go_query_public_doctor_detail = function (index) {
 }
 
 </script>
-    
 <template>
     <div class="page" style="background-color: rgb(250, 250, 250); ">
-
         <div class="title_forzen">
-            <h1>名医在线</h1>
+            <h1>💡名医在线</h1>
             <div class="icon_top_right">
                 <nut-icon name="message" size="24"></nut-icon>
             </div>
@@ -61,25 +61,12 @@ const go_query_public_doctor_detail = function (index) {
             <div class="body_doctor_list">
 
                 <div v-for="doctor_item, index in doctor_dict_list">
-                    <div class="doctor_item_card">
-                        <h3 style="text-align: center; background-color: white;">
-                            {{ doctor_item["username"].slice(0, 16) }}
-                        </h3>
-                        <nut-avatar size="96" :icon="doctor_item['avatar_url']" class="avatar"></nut-avatar>
-                        <nut-cell-group title="">
-                            <nut-cell icon="order" title="真实姓名：" :desc="doctor_item['real_name']"></nut-cell>
-                            <nut-cell icon="service" title="从业年数："
-                                :desc="String(doctor_item['career_year'])"></nut-cell>
-                            <nut-cell icon="eye" title="任职医院：" :desc="doctor_item['hospital']"></nut-cell>
-                            <nut-cell icon="marshalling" title="任职岗位：" :desc="doctor_item['post']"></nut-cell>
-                            <nut-cell icon="comment" title="擅长科目：" :desc="doctor_item['good_at']"></nut-cell>
-                            <nut-cell icon="comment" title="微信ID：" :desc="doctor_item['wechat']"></nut-cell>
-                        </nut-cell-group>
-
-
-                        <nut-button type="primary" class="button"
-                            @click="go_query_public_doctor_detail(index)">👩‍⚕️求助医生👨‍⚕️</nut-button>
-                    </div>
+                    <DoctorCard :avatar="doctor_item['avatar_url']" :username="doctor_item['username']"
+                        :real_name="doctor_item['real_name']" :career_year="doctor_item['career_year']"
+                        :hospital="doctor_item['hospital']" :position="doctor_item['post']"
+                        :good_at="doctor_item['good_at']" :we_chat="doctor_item['wechat']"
+                        @onQueryDetail="go_query_public_doctor_detail(index)">
+                    </DoctorCard>
                 </div>
 
             </div>
@@ -93,7 +80,7 @@ const go_query_public_doctor_detail = function (index) {
     overflow: auto;
     height: 95vh;
     display: -webkit-flex;
-    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 
 .title_forzen {
@@ -145,48 +132,10 @@ const go_query_public_doctor_detail = function (index) {
 }
 
 
-.doctor_item_card {
-    margin-top: 20px;
-    background-color: white;
-    border-top: gray solid 2px;
-    border-right: gray solid 2px;
-    border-bottom: gray solid 1px;
-    border-left: gray solid 1px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    padding-bottom: 15px;
-    padding-top: 15px;
-
-}
-
-.doctor_list {
-    position: relative;
-    margin-top: 20px;
-    width: 90%;
-
-    margin-left: 50%;
-    transform: translate(-50%, 0);
-
-    /* border: 1px red solid; */
-}
-
 .body_doctor_list {
     position: relative;
     left: 5%;
     width: 90%;
-}
-
-.button {
-    /* width: fit-content; */
-    width: 80%;
-    margin-left: 50%;
-    transform: translate(-50%, 0);
-    /* border:1px solid red; */
-}
-
-.avatar {
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 </style>
     

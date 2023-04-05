@@ -54,7 +54,7 @@ export const query_go_session = async function(username, session_id, query_messa
   await axios({
     method: "post",
     url: base_url+"query/go_session",
-    timeout: 4000, // 请求4秒无响应则会超时
+    timeout: 400000, // 请求很久很久很久无响应则会超时
     data: {
       username: username,
       session_id: session_id,
