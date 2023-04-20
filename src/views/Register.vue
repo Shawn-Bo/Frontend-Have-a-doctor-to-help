@@ -82,9 +82,8 @@ const register = function () {
 .page {
   overflow: hidden;
   height: 100vh;
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .body {

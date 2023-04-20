@@ -1,9 +1,8 @@
 <script setup>
+import { Notify } from '@nutui/nutui';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { user_edit_region, user_edit_sex } from "../apis/me.js";
-//import {user_edit_birth, user_edit_phone, user_edit_sex, user_edit_region, user_edit_info, user_edit_avator} from "../apis/me.js"
-import { user_get } from "../apis/me.js";
+import { user_edit_region, user_edit_sex, user_get } from "../apis/me.js";
 import SearchBar from '../components/SearchBar.vue';
 let router = useRouter();
 // 保证登录
@@ -122,79 +121,79 @@ const go_certified_as_a_doctor = function () {
 </script>
     
 <template>
-    <div class="page" style="background-color: rgb(250, 250, 250); ">
-        <SearchBar></SearchBar>
-        <div class="body">
+    <div>
+        <div class="page" style="background-color: rgb(250, 250, 250); ">
+            <SearchBar></SearchBar>
+            <div class="body">
 
-            <div class="photo" v-if="userinfo.avatar !== null">
-                <nut-avatar size="120" :icon="userinfo.avatar" @click="() => { router.push('/me/pick_avator') }">
-                </nut-avatar>
-            </div>
-            <div class="photo" v-else>
-                <nut-avatar size="120" icon="https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg"
-                    @click="() => { router.push('/me/pick_avator') }">
-                </nut-avatar>
-            </div>
-            <!-- TODO: 使用picker输入一些数据 -->
-            <nut-cell-group title="个人信息" desc="">
-                <nut-cell title="用户名" :desc="userinfo.name">
-                </nut-cell>
-                <nut-cell title="性别" :desc="userinfo.sex === null ? '是个秘密' : (userinfo.sex === 0 ? '女生' : '男生')">
-                    <template v-slot:link>
-                        <nut-icon name="right" @click="() => { show_picker_sex = true; }"></nut-icon>
-                    </template>
-                </nut-cell>
-                <nut-cell title="生日" :desc="userinfo.birthday === null ? '是个秘密' : (userinfo.birthday)">
-                    <template v-slot:link>
-                        <nut-icon name="right" @click="() => {
-                            router.push('/me/pick_birth');
-                        }"></nut-icon>
-                    </template>
-                </nut-cell>
-                <nut-cell title="地区" :desc="userinfo.region === null ? '是个秘密' : (userinfo.region)">
-                    <template v-slot:link>
-                        <nut-icon name="right" @click="() => { show_picker_region = true; }"></nut-icon>
-                    </template>
-                </nut-cell>
-                <nut-cell title="电话号码" :desc="userinfo.phone === null ? '是个秘密' : (userinfo.phone)" @click="() => {
-                    router.push('/me/pick_phone');
-                }">
-                    <template v-slot:link>
-                        <nut-icon name="right"></nut-icon>
-                    </template>
-                </nut-cell>
-                <nut-cell title="个性签名" :desc="userinfo.info === null ? '不足为外人道也' : (userinfo.info)" @click="() => {
-                    router.push('/me/pick_info');
-                }">
-                    <template v-slot:link>
-                        <nut-icon name="right"></nut-icon>
-                    </template>
-                </nut-cell>
-            </nut-cell-group>
+                <div class="photo" v-if="userinfo.avatar !== null">
+                    <nut-avatar size="120" :icon="userinfo.avatar" @click="() => { router.push('/me/pick_avator') }">
+                    </nut-avatar>
+                </div>
+                <div class="photo" v-else>
+                    <nut-avatar size="120" icon="https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg"
+                        @click="() => { router.push('/me/pick_avator') }">
+                    </nut-avatar>
+                </div>
+                <!-- 使用picker输入一些数据 -->
+                <nut-cell-group title="个人信息" desc="">
+                    <nut-cell title="用户名" :desc="userinfo.name">
+                    </nut-cell>
+                    <nut-cell title="性别" :desc="userinfo.sex === null ? '是个秘密' : (userinfo.sex === 0 ? '女生' : '男生')">
+                        <template v-slot:link>
+                            <nut-icon name="right" @click="() => { show_picker_sex = true; }"></nut-icon>
+                        </template>
+                    </nut-cell>
+                    <nut-cell title="生日" :desc="userinfo.birthday === null ? '是个秘密' : (userinfo.birthday)">
+                        <template v-slot:link>
+                            <nut-icon name="right" @click="() => {
+                                router.push('/me/pick_birth');
+                            }"></nut-icon>
+                        </template>
+                    </nut-cell>
+                    <nut-cell title="地区" :desc="userinfo.region === null ? '是个秘密' : (userinfo.region)">
+                        <template v-slot:link>
+                            <nut-icon name="right" @click="() => { show_picker_region = true; }"></nut-icon>
+                        </template>
+                    </nut-cell>
+                    <nut-cell title="电话号码" :desc="userinfo.phone === null ? '是个秘密' : (userinfo.phone)" @click="() => {
+                        router.push('/me/pick_phone');
+                    }">
+                        <template v-slot:link>
+                            <nut-icon name="right"></nut-icon>
+                        </template>
+                    </nut-cell>
+                    <nut-cell title="个性签名" :desc="userinfo.info === null ? '不足为外人道也' : (userinfo.info)" @click="() => {
+                        router.push('/me/pick_info');
+                    }">
+                        <template v-slot:link>
+                            <nut-icon name="right"></nut-icon>
+                        </template>
+                    </nut-cell>
+                </nut-cell-group>
 
-            <nut-cell-group title="更多功能" desc="">
-                <nut-grid :column-num="3">
-                    <nut-grid-item icon="comment" text="我的问诊单"
-                        @click="router.push('/exported_sessions')"></nut-grid-item>
-                    <nut-grid-item icon="order" text="我的预约单"></nut-grid-item>
-                    <nut-grid-item icon="shop" text="我的处方单"></nut-grid-item>
-                    <nut-grid-item icon="people" text="医生认证" @click="go_certified_as_a_doctor"></nut-grid-item>
-                </nut-grid>
-            </nut-cell-group>
-            <nut-button type="danger" class="button" @click="logout">退出登录</nut-button>
+                <nut-cell-group title="更多功能" desc="">
+                    <nut-grid :column-num="2">
+                        <nut-grid-item icon="comment" text="我的问诊单"
+                            @click="router.push('/exported_sessions')"></nut-grid-item>
+                        <nut-grid-item icon="people" text="医生认证" @click="go_certified_as_a_doctor"></nut-grid-item>
+                    </nut-grid>
+                </nut-cell-group>
+                <nut-button type="danger" class="button" @click="logout">退出登录</nut-button>
+
+            </div>
+
 
         </div>
+        <!-- PICKERS -->
+        <nut-picker v-model:visible="show_picker_sex" :columns="picker_sex" title="我的性别" @change="change_picker_sex"
+            @confirm="confirm_picker_sex" :three-dimensional="false">
+        </nut-picker>
 
-
+        <nut-picker v-model:visible="show_picker_region" :columns="picker_region" title="我的地区"
+            @change="change_picker_region" @confirm="confirm_picker_region" :three-dimensional="false">
+        </nut-picker>
     </div>
-    <!-- PICKERS -->
-    <nut-picker v-model:visible="show_picker_sex" :columns="picker_sex" title="我的性别" @change="change_picker_sex"
-        @confirm="confirm_picker_sex" :three-dimensional="false">
-    </nut-picker>
-
-    <nut-picker v-model:visible="show_picker_region" :columns="picker_region" title="我的地区"
-        @change="change_picker_region" @confirm="confirm_picker_region" :three-dimensional="false">
-    </nut-picker>
 </template>
     
 <style scoped>

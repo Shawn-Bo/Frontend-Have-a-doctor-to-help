@@ -23,6 +23,9 @@ const confirm = () => {
     if (res["code"] === "success") {
       Notify.success("认证成功", { duration: 500 });
       history.back();
+    } else if (res["code"] === "user_already_certified") {
+      Notify.warn("一位用户只能注册为一次医生！", { duration: 500 });
+      history.back();
     }
   });
 }
@@ -112,7 +115,7 @@ const confirm = () => {
   overflow: auto;
   height: 100vh;
   display: -webkit-flex;
-  -webkit-flex-direction: column;
+  flex-direction: column;
 }
 </style>
           

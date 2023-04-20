@@ -1,7 +1,7 @@
 <script setup>
 import KnowledgeGraph from '../components/KnowledgeGraph.vue';
+import MessageIcon from '../components/MessageIcon.vue';
 import SearchBar from '../components/SearchBar.vue';
-
 
 </script>
 
@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar.vue';
         <div class="title_forzen">
             <h1>🧿查看图谱</h1>
             <div class="icon_top_right">
-                <nut-icon name="message" size="24"></nut-icon>
+                <MessageIcon></MessageIcon>
             </div>
         </div>
         <div class="searchbar_forzen">
@@ -32,6 +32,7 @@ import SearchBar from '../components/SearchBar.vue';
     height: 92vh;
     display: -webkit-flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .title_forzen {
@@ -85,6 +86,6 @@ import SearchBar from '../components/SearchBar.vue';
 .graph {
     margin: 0px;
     padding: 0px;
-    height: 75vh;
+    height: 65vh;
 }
 </style>

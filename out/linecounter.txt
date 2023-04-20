@@ -1,0 +1,74 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2023-04-06 07:49:23
+count workspace : d:\PrivateProjects\Frontend-Have-a-doctor-to-help
+total files : 50
+total code lines : 6269
+total comment lines : 259
+total blank lines : 577
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |            .js|            525|             77|             31|    8.4|
+   |            .md|              2|              0|              0|  0.032|
+   |           .svg|              4|              0|              0|  0.064|
+   |           .vue|           2697|            169|            489|     43|
+   |           .css|             81|              1|             10|    1.3|
+   |          .json|           2918|              0|             43|     47|
+   |          .html|             28|              0|              2|   0.45|
+   |               |             14|             12|              2|   0.22|
+   -------------------------------------------------------------------------
+.gitignore, code is 14, comment is 12, blank is 2.
+dist\assets\index.90d73971.css, code is 1, comment is 1, blank is 0.
+dist\assets\index.c2e0f991.js, code is 7, comment is 0, blank is 0.
+dist\assets\vue.5532db34.svg, code is 1, comment is 0, blank is 0.
+dist\index.html, code is 14, comment is 0, blank is 1.
+dist\vite.svg, code is 1, comment is 0, blank is 0.
+index.html, code is 14, comment is 0, blank is 1.
+package-lock.json, code is 2792, comment is 0, blank is 43.
+package.json, code is 25, comment is 0, blank is 0.
+public\vite.svg, code is 1, comment is 0, blank is 0.
+README.md, code is 2, comment is 0, blank is 0.
+src\apis\api.js, code is 2, comment is 0, blank is 0.
+src\apis\doctor.js, code is 15, comment is 1, blank is 2.
+src\apis\graph.js, code is 16, comment is 2, blank is 1.
+src\apis\login.js, code is 17, comment is 1, blank is 0.
+src\apis\me.js, code is 126, comment is 8, blank is 6.
+src\apis\query.js, code is 195, comment is 15, blank is 15.
+src\apis\register.js, code is 17, comment is 1, blank is 0.
+src\apis\session.js, code is 10, comment is 41, blank is 1.
+src\App.vue, code is 17, comment is 0, blank is 3.
+src\assets\kg_style.json, code is 101, comment is 0, blank is 0.
+src\assets\logo.png, it is a binary file.
+src\assets\vue.svg, code is 1, comment is 0, blank is 0.
+src\components\DoctorCard.vue, code is 129, comment is 3, blank is 33.
+src\components\HomeCard.vue, code is 103, comment is 3, blank is 28.
+src\components\KnowledgeGraph.vue, code is 108, comment is 44, blank is 24.
+src\components\SearchBar.vue, code is 25, comment is 0, blank is 4.
+src\components\Tabbar.vue, code is 30, comment is 0, blank is 7.
+src\main.js, code is 8, comment is 2, blank is 0.
+src\router\index.js, code is 102, comment is 0, blank is 3.
+src\style.css, code is 80, comment is 0, blank is 10.
+src\utils\util_data_validation.js, code is 2, comment is 5, blank is 2.
+src\views\ExportedSessions.vue, code is 202, comment is 13, blank is 42.
+src\views\forms\AsADoctor.vue, code is 97, comment is 2, blank is 18.
+src\views\forms\PickAvator.vue, code is 81, comment is 2, blank is 17.
+src\views\forms\PickBirth.vue, code is 74, comment is 5, blank is 17.
+src\views\forms\PickInfo.vue, code is 77, comment is 2, blank is 16.
+src\views\forms\PIckPhone.vue, code is 81, comment is 3, blank is 17.
+src\views\Graph.vue, code is 73, comment is 1, blank is 16.
+src\views\Home.vue, code is 103, comment is 3, blank is 20.
+src\views\Inquary.vue, code is 114, comment is 4, blank is 22.
+src\views\Login.vue, code is 83, comment is 5, blank is 18.
+src\views\Main.vue, code is 17, comment is 0, blank is 2.
+src\views\Me.vue, code is 225, comment is 16, blank is 25.
+src\views\Query.vue, code is 255, comment is 17, blank is 33.
+src\views\QueryPublicSessionDetail.vue, code is 226, comment is 12, blank is 38.
+src\views\QuerySessionDetail.vue, code is 224, comment is 10, blank is 33.
+src\views\Register.vue, code is 108, comment is 5, blank is 22.
+src\views\UserInquaryDetail.vue, code is 245, comment is 19, blank is 34.
+vite.config.js, code is 8, comment is 1, blank is 1.
+===============================================================================

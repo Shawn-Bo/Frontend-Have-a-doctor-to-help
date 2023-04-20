@@ -3,18 +3,47 @@ import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { user_login } from "../apis/login.js";
+import { user_get } from "../apis/me.js";
 import imgUrl from "../assets/logo.png";
-
 
 const router = useRouter();
 let username = ref("");
 let password = ref("");
 
+let userinfo = {
+  name: null,
+  avatar: null,
+  sex: null,
+  birthday: null,
+  region: null,
+  phone: null,
+  info: null
+};
+
+
+
 const login = function () {
+  user_get(username.value).then(
+    (res) => {
+      if (res["code"] === "success") { // 成功获得用户信息
+        userinfo.avatar = res["info"]["avatar"];
+        userinfo.birthday = res["info"]["birthday"];
+        userinfo.info = res["info"]["info"];
+        userinfo.phone = res["info"]["phone"];
+        userinfo.region = res["info"]["region"];
+        userinfo.sex = res["info"]["sex"];
+        localStorage.setItem("userinfo", JSON.stringify(userinfo));
+      } else {
+
+        Notify.warn("获取用户信息失败");
+      }
+    });
+
   user_login(username.value, password.value).then(
     (res) => {
       if (res["code"] === "success") {
         localStorage.setItem("username", username.value);
+
         router.push("/home");
       } else {
         Notify.warn("登录失败");

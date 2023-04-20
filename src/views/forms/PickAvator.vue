@@ -50,12 +50,6 @@ const confirm = () => {
 </template>
           
 <style scoped>
-.title {
-  width: fit-content;
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-  /* border:1px solid red; */
-}
 
 .button {
   position: relative;

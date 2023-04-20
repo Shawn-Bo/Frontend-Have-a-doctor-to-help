@@ -1,0 +1,360 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "d:\\PrivateProjects\\Frontend-Have-a-doctor-to-help",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2023-04-06 07:49:23",
+            "filesum": 50,
+            "codesum": 6269,
+            "commentsum": 259,
+            "blanksum": 577,
+            "statistics": {
+                ".js": {
+                    "code": 525,
+                    "comment": 77,
+                    "blank": 31
+                },
+                ".md": {
+                    "code": 2,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".svg": {
+                    "code": 4,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".vue": {
+                    "code": 2697,
+                    "comment": 169,
+                    "blank": 489
+                },
+                ".css": {
+                    "code": 81,
+                    "comment": 1,
+                    "blank": 10
+                },
+                ".json": {
+                    "code": 2918,
+                    "comment": 0,
+                    "blank": 43
+                },
+                ".html": {
+                    "code": 28,
+                    "comment": 0,
+                    "blank": 2
+                },
+                "": {
+                    "code": 14,
+                    "comment": 12,
+                    "blank": 2
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 12,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 1,
+                    "filename": "dist\\assets\\index.90d73971.css"
+                },
+                {
+                    "blank": 0,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "dist\\assets\\index.c2e0f991.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "dist\\assets\\vue.5532db34.svg"
+                },
+                {
+                    "blank": 1,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "dist\\index.html"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "dist\\vite.svg"
+                },
+                {
+                    "blank": 1,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "index.html"
+                },
+                {
+                    "blank": 43,
+                    "code": 2792,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "public\\vite.svg"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "src\\apis\\api.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 15,
+                    "comment": 1,
+                    "filename": "src\\apis\\doctor.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 16,
+                    "comment": 2,
+                    "filename": "src\\apis\\graph.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 17,
+                    "comment": 1,
+                    "filename": "src\\apis\\login.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 126,
+                    "comment": 8,
+                    "filename": "src\\apis\\me.js"
+                },
+                {
+                    "blank": 15,
+                    "code": 195,
+                    "comment": 15,
+                    "filename": "src\\apis\\query.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 17,
+                    "comment": 1,
+                    "filename": "src\\apis\\register.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 10,
+                    "comment": 41,
+                    "filename": "src\\apis\\session.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src\\App.vue"
+                },
+                {
+                    "blank": 0,
+                    "code": 101,
+                    "comment": 0,
+                    "filename": "src\\assets\\kg_style.json"
+                },
+                {
+                    "filename": "src\\assets\\logo.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "src\\assets\\vue.svg"
+                },
+                {
+                    "blank": 33,
+                    "code": 129,
+                    "comment": 3,
+                    "filename": "src\\components\\DoctorCard.vue"
+                },
+                {
+                    "blank": 28,
+                    "code": 103,
+                    "comment": 3,
+                    "filename": "src\\components\\HomeCard.vue"
+                },
+                {
+                    "blank": 24,
+                    "code": 108,
+                    "comment": 44,
+                    "filename": "src\\components\\KnowledgeGraph.vue"
+                },
+                {
+                    "blank": 4,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "src\\components\\SearchBar.vue"
+                },
+                {
+                    "blank": 7,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src\\components\\Tabbar.vue"
+                },
+                {
+                    "blank": 0,
+                    "code": 8,
+                    "comment": 2,
+                    "filename": "src\\main.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 102,
+                    "comment": 0,
+                    "filename": "src\\router\\index.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 80,
+                    "comment": 0,
+                    "filename": "src\\style.css"
+                },
+                {
+                    "blank": 2,
+                    "code": 2,
+                    "comment": 5,
+                    "filename": "src\\utils\\util_data_validation.js"
+                },
+                {
+                    "blank": 42,
+                    "code": 202,
+                    "comment": 13,
+                    "filename": "src\\views\\ExportedSessions.vue"
+                },
+                {
+                    "blank": 18,
+                    "code": 97,
+                    "comment": 2,
+                    "filename": "src\\views\\forms\\AsADoctor.vue"
+                },
+                {
+                    "blank": 17,
+                    "code": 81,
+                    "comment": 2,
+                    "filename": "src\\views\\forms\\PickAvator.vue"
+                },
+                {
+                    "blank": 17,
+                    "code": 74,
+                    "comment": 5,
+                    "filename": "src\\views\\forms\\PickBirth.vue"
+                },
+                {
+                    "blank": 16,
+                    "code": 77,
+                    "comment": 2,
+                    "filename": "src\\views\\forms\\PickInfo.vue"
+                },
+                {
+                    "blank": 17,
+                    "code": 81,
+                    "comment": 3,
+                    "filename": "src\\views\\forms\\PIckPhone.vue"
+                },
+                {
+                    "blank": 16,
+                    "code": 73,
+                    "comment": 1,
+                    "filename": "src\\views\\Graph.vue"
+                },
+                {
+                    "blank": 20,
+                    "code": 103,
+                    "comment": 3,
+                    "filename": "src\\views\\Home.vue"
+                },
+                {
+                    "blank": 22,
+                    "code": 114,
+                    "comment": 4,
+                    "filename": "src\\views\\Inquary.vue"
+                },
+                {
+                    "blank": 18,
+                    "code": 83,
+                    "comment": 5,
+                    "filename": "src\\views\\Login.vue"
+                },
+                {
+                    "blank": 2,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src\\views\\Main.vue"
+                },
+                {
+                    "blank": 25,
+                    "code": 225,
+                    "comment": 16,
+                    "filename": "src\\views\\Me.vue"
+                },
+                {
+                    "blank": 33,
+                    "code": 255,
+                    "comment": 17,
+                    "filename": "src\\views\\Query.vue"
+                },
+                {
+                    "blank": 38,
+                    "code": 226,
+                    "comment": 12,
+                    "filename": "src\\views\\QueryPublicSessionDetail.vue"
+                },
+                {
+                    "blank": 33,
+                    "code": 224,
+                    "comment": 10,
+                    "filename": "src\\views\\QuerySessionDetail.vue"
+                },
+                {
+                    "blank": 22,
+                    "code": 108,
+                    "comment": 5,
+                    "filename": "src\\views\\Register.vue"
+                },
+                {
+                    "blank": 34,
+                    "code": 245,
+                    "comment": 19,
+                    "filename": "src\\views\\UserInquaryDetail.vue"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 1,
+                    "filename": "vite.config.js"
+                }
+            ]
+        }
+    ]
+}

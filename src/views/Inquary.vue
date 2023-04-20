@@ -4,8 +4,8 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { get_doctors } from "../apis/doctor.js";
 import DoctorCard from "../components/DoctorCard.vue";
+import MessageIcon from "../components/MessageIcon.vue";
 import SearchBar from '../components/SearchBar.vue';
-
 
 const route = useRoute();
 const router = useRouter();
@@ -26,11 +26,10 @@ const go_query_public_doctor_detail = function (index) {
     } else {
         // 在这里开始求助医生业务
         // 也就是呆着医生信息和用户信息，跳转到一个新的聊天页面
-
         router.push({
-            path: "/inquary/detail_user",
+            path: "/inquiry/exported_session_go_detail",
             query: {
-                picked_session_id: exported_session_picked,
+                going_session_id: exported_session_picked,
                 picked_doctor_id:
                     doctor_dict_list.value[index].username
 
@@ -45,21 +44,20 @@ const go_query_public_doctor_detail = function (index) {
         <div class="title_forzen">
             <h1>💡名医在线</h1>
             <div class="icon_top_right">
-                <nut-icon name="message" size="24"></nut-icon>
+                <MessageIcon></MessageIcon>
             </div>
         </div>
         <div class="searchbar_forzen">
             <SearchBar></SearchBar>
-            <nut-noticebar :closeMode="true" right-icon="circle-close" :background="`rgba(250, 250, 220, 1)`"
+            <nut-noticebar :closeMode="false" :background="`rgba(250, 250, 220, 1)`"
                 :color="`#D9500B`">操作说明：在“我的”👉“我的问诊单”👉“查看问诊单”中确定问诊单之后，选择“👨‍⚕️继续问医生👩‍⚕️”，跳转到此界面选择“👨‍⚕️求助医生👩‍⚕️”。
             </nut-noticebar>
         </div>
         <div style="min-height: 120px;"></div>
         <!-- 下面是一堆各种各样的卡片 -->
         <div class="body">
-
             <div class="body_doctor_list">
-
+                <div style="height:12px"></div>
                 <div v-for="doctor_item, index in doctor_dict_list">
                     <DoctorCard :avatar="doctor_item['avatar_url']" :username="doctor_item['username']"
                         :real_name="doctor_item['real_name']" :career_year="doctor_item['career_year']"
@@ -68,8 +66,8 @@ const go_query_public_doctor_detail = function (index) {
                         @onQueryDetail="go_query_public_doctor_detail(index)">
                     </DoctorCard>
                 </div>
-
             </div>
+            <div style="height:20px"></div>
         </div>
 
     </div>
@@ -79,7 +77,7 @@ const go_query_public_doctor_detail = function (index) {
 .page {
     overflow: auto;
     height: 95vh;
-    display: -webkit-flex;
+    display: flex;
     flex-direction: column;
 }
 
@@ -126,7 +124,7 @@ const go_query_public_doctor_detail = function (index) {
 
 
 .body {
-    height: auto;
+    height: 90vh;
     overflow-y: auto;
     overflow-x: hidden;
 }

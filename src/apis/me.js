@@ -16,6 +16,21 @@ export const user_get = async function(username){
   return res;
 }
 
+export const user_get_avatar = async function(username){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"user/get_avatar",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      username: username,
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}
+
 export const user_edit_sex = async function(username, sex){
   let res;
   await axios({

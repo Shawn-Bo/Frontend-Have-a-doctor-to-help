@@ -4,10 +4,12 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
 import { user_get } from "../apis/me.js";
 import { mark_publish_session, query_delete_export_session } from "../apis/query.js";
+import doctor_avatar_url from "../assets/doctor_avatar_url.png";
 const route = useRoute();
 const router = useRouter();
 let message_box = ref(null);
 // route.query即可接收参数
+
 let public_session_item = JSON.parse(route.query.public_session_item)
 let session_to_show = ref(public_session_item["session_detail"]);
 // 从用户名获取用户头像
@@ -40,11 +42,15 @@ const mark_session = function () {
 };
 
 const like_session = function () {
+  // 就是一个假性功能提示
+  Notify.primary("🤓已收到您的点赞！🤓", { duration: 1000 });
+  setTimeout(() => { router.push("/home") }, 200);
 
 };
 
 const dislike_session = function () {
-
+  Notify.danger("🥱已收到您的点踩！🥱", { duration: 1000 });
+  setTimeout(() => { router.push("/home") }, 200);
 };
 
 const delete_session = function () {
@@ -82,8 +88,7 @@ const delete_session = function () {
             </div>
             <div class="left_message_box">
               <div class="avatar_box">
-                <nut-avatar size="60" shape="square"
-                  icon="https://img.ixintu.com/download/jpg/202008/24e3630a27f1b68d120b5bd190d6df92_610_610.jpg!con">
+                <nut-avatar size="60" shape="square" :icon="doctor_avatar_url">
                 </nut-avatar>
               </div>
               <div class="left_strings">

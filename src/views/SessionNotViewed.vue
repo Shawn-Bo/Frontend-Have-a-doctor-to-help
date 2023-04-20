@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
-import { query_get_exported_sessions } from "../apis/query.js";
+import { get_inquiry_not_viewed } from '../apis/query.js';
 const router = useRouter();
 
 // 返回到上一页
@@ -11,24 +11,29 @@ let back = function () {
 // 获取用户名
 let username = localStorage.getItem("username");
 
+
 // 查询用户的所有sessions
 let session_list = ref([]);
-query_get_exported_sessions(username).then((res) => {
+
+get_inquiry_not_viewed(username, true).then((res) => {
   if (res["code"] == "success") {
-    session_list.value = res["session_list"].reverse();
-    console.log(session_list.value);
+    console.log(res["data"]);
+    session_list.value = res["data"].reverse()
   }
 });
 
 // 前往会话详情页面
 const go_query_session_detail = function (index) {
-  let session_json = session_list.value[index];
+  let session_json = session_list.value[index]["session_messages"];
   router.push({
-    path: "/query/session_detail",
-    query: { session_json: JSON.stringify(session_json) }
+    path: "/inquiry/exported_session_go_detail",
+    query: {
+      going_session_id: session_json["session_id"],
+      session_json: JSON.stringify(session_json)
+    }
   });
-}
 
+}
 
 
 </script>
@@ -40,27 +45,31 @@ const go_query_session_detail = function (index) {
       <div class="icon_left">
         <nut-icon name="left" @click="back" size="20"></nut-icon>
       </div>
-      <h2>我的问诊单</h2>
+      <h2>未读消息</h2>
       <div class="icon_top_right">
-        <nut-icon name="message" size="24"></nut-icon>
       </div>
     </div>
 
 
     <div class="session_list">
       <div v-for="session_item, index  in session_list">
+
         <div class="session_item_card">
           <h3 style="text-align: center;">
-            {{ JSON.stringify(session_item["session_messages"][0]["message_text"]).slice(0, 32) + '...' }}</h3>
+            {{ session_item["session_messages"]["session_messages"][0]["message_text"].slice(0, 16) }}</h3>
           <nut-cell-group title="">
+
             <nut-cell icon="order" title="编号：" :desc="session_item['session_id']"></nut-cell>
-            <nut-cell icon="service" title="追问："
-              :desc="JSON.stringify(session_item['session_messages'][session_item['session_messages'].length - 2]['message_text']).slice(0, 32) + '...'"></nut-cell>
+            <nut-cell icon="people" title="用户："
+              :desc="session_item['session_messages']['session_messages'][session_item['session_messages']['session_messages'].length - 1]['message_sender']"></nut-cell>
+            <nut-cell icon="service" title="最新："
+              :desc="session_item['session_messages']['session_messages'][session_item['session_messages']['session_messages'].length - 1]['message_text']"></nut-cell>
             <nut-cell icon="eye" title="始于："
-              :desc="session_item['session_messages'][session_item['session_messages'].length - 2]['message_time']"></nut-cell>
-            <nut-cell icon="marshalling" title="止于"
-              :desc="session_item['session_messages'][0]['message_time']"></nut-cell>
-            <nut-cell icon="comment" title="轮次：" :desc="String(session_item['session_messages'].length)"></nut-cell>
+              :desc="session_item['session_messages']['session_messages'][0]['message_time']"></nut-cell>
+            <nut-cell icon="marshalling" title="止于" :desc="session_item['session_messages']['session_messages'][session_item['session_messages']['session_messages'].length
+              - 1]['message_time']"></nut-cell>
+            <nut-cell icon="comment" title="轮次："
+              :desc="String(session_item['session_messages']['session_messages'].length)"></nut-cell>
           </nut-cell-group>
 
 

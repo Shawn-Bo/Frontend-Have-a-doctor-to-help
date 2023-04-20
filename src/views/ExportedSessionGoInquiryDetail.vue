@@ -1,90 +1,117 @@
 <script setup>
-import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
-import { query_export_session, query_get_session, query_go_session, query_new_session } from "../apis/query.js";
-import { get_session_temp } from "../apis/session.js";
-
+import { user_get_avatar } from '../apis/me.js';
+import { query_get_exported_session, query_go_exported_session, update_doctor_inquiry } from '../apis/query';
 import doctor_avatar_url from "../assets/doctor_avatar_url.png";
+import { global_status } from '../common/global.js';
 const route = useRoute();
 const router = useRouter();
 let messageText = ref("");
 let message_box = ref(null);
-let loading = ref(true);
 // route.query即可接收参数
-let new_session_start_question = ref(route.query.question);
-let session_to_show = ref(get_session_temp());
+let username = localStorage.getItem("username");
+let going_session_id = route.query.going_session_id;
+let counter_part_username = "" || route.query.picked_doctor_id;
+
+let session_to_show = ref({});
+// 获取session
+query_get_exported_session(going_session_id).then((res) => {
+  if (res["code"] === "success") {
+    let session_info = JSON.parse(res["data"][0]);
+    session_to_show.value = session_info;
+    update_session_avatar();
+  }
+});
+
+
 let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
+
 let back = function () {
   history.back();
 }
-let username = localStorage.getItem("username");
-query_new_session(username).then((res) => {
-  if (res["code"] === "success") {
-    // 成功创建了新的会话
-    let new_session_id = res["session_id"];
-    localStorage.setItem("session_id", new_session_id);
-    // 追加新会话的内容
-    query_go_session(username, new_session_id, { "message_id": 0, message_sender: username, "message_text": new_session_start_question.value }).then((res) => {
-      if (res["code"] === "success") {
-        // 成功追加对话
-        query_get_session(username, new_session_id).then((res) => {
-          console.log(res)
-          if (res["code"] === "success") {
-            session_to_show.value = JSON.parse(res["session"]);
-          } else {
-            Notify.warn("会话获取失败");
-          }
-        });
-        loading.value = false;
-      } else {
-        Notify.warn("会话追加失败");
-      }
-    });
+let counter_part_user_avatar = "";
 
-  } else {
-    Notify.warn("会话创建失败");
+// 更新头像数据！
+const update_session_avatar = function () {
+  for (let i = 0, len = session_to_show.value["session_messages"].length; i < len; i++) {
+    let username_for_avatar = session_to_show.value["session_messages"][i]["message_sender"];
+    if (typeof (session_to_show.value["session_messages"][i]["avatar"]) !== "undefined") {
+      continue;
+    }
+    if (username_for_avatar === "robot") {
+      session_to_show.value["session_messages"][i]["avatar"] = doctor_avatar_url;
+    } else if (username_for_avatar === username) {
+      session_to_show.value["session_messages"][i]["avatar"] = avatar_url;
+    } else if (counter_part_user_avatar !== "") {
+      counter_part_username = username_for_avatar;
+      session_to_show.value["session_messages"][i]["avatar"] = counter_part_user_avatar;
+    } else {
+      counter_part_username = username_for_avatar;
+      user_get_avatar(username_for_avatar).then((res) => {
+        counter_part_user_avatar = res["data"];
+        session_to_show.value["session_messages"][i]["avatar"] = counter_part_user_avatar;
+      });
+    }
   }
+
+}
+
+// 更新记录，保证没看！
+update_doctor_inquiry(username, going_session_id, "viewed").then((res) => {
+  console.log(username, going_session_id, "viewed");
 });
+// 翻到最下面
+setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
+
+if (!global_status.query_detail_not_viewed) {
+  setInterval(function () {
+    query_get_exported_session(going_session_id).then((res) => {
+      if (res["code"] === "success") {
+        if (session_to_show.value !== JSON.parse(res["data"][0])) {
+          session_to_show.value = JSON.parse(res["data"][0]);
+          setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
+        }
+        update_session_avatar();
+      } else {
+        Notify.warn("会话获取失败");
+      }
+
+    });
+  }, 8000);
+}
 // 发送聊天
 const send_message = () => {
   // 追加新会话的内容
-  loading.value = true;
-
-  setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
-  let message_text = messageText.value;
-  messageText.value = ""; // 清空输入栏
-  query_go_session(username, session_to_show.value.session_id, { "message_id": session_to_show.value.session_messages.length, message_sender: username, "message_text": message_text }).then((res) => {
+  query_go_exported_session(username, going_session_id, { "message_id": session_to_show.value.session_messages.length, message_sender: username, "message_text": messageText.value }).then((res) => {
     if (res["code"] === "success") {
       // 成功追加对话
-      query_get_session(username, session_to_show.value.session_id).then((res) => {
+      query_get_exported_session(going_session_id).then((res) => {
         if (res["code"] === "success") {
-          session_to_show.value = JSON.parse(res["session"]);
-          loading.value = false;
+
+          session_to_show.value = JSON.parse(res["data"][0]);
+          update_session_avatar();
+          messageText.value = ""; // 清空输入栏
         } else {
           Notify.warn("会话获取失败");
         }
       });
+      update_doctor_inquiry(counter_part_username, going_session_id, "not_viewed").then((res) => {
+        if (res["code"] === "success") {
+          // 说明医生那边有未查看通知了
+        } else {
+          Notify.warn("会话状态修改失败");
+        }
+      });
+
+      setTimeout(function () { message_box.value.scrollTop = 100000; }, 100);
     } else {
       Notify.warn("会话追加失败");
     }
   });
 }
-
-// 导出问诊单
-const export_session = function () {
-  query_export_session(username, session_to_show.value.session_id).then((res) => {
-    if (res["code"] === "success") {
-      router.push("/home");
-      Notify.success("会话导出成功", { duration: 500 });
-    } else {
-      Notify.warn("会话导出失败");
-    }
-  });
-};
-
 </script>
-      
+
 <template>
   <div class="page" style="background-color: rgb(250, 250, 250); ">
     <div class="title_forzen">
@@ -92,22 +119,21 @@ const export_session = function () {
       <div class="icon_left">
         <nut-icon name="left" @click="back" size="20"></nut-icon>
       </div>
-      <h2>快速问诊</h2>
+      <h2>名医问诊</h2>
       <div class="icon_top_right">
       </div>
     </div>
     <div class="body" ref="message_box">
-
       <div v-for="message in session_to_show.session_messages" :key="message.message_id">
         <div class="message">
-          <div v-if="message.message_sender === 'robot'">
+          <div v-if="message.message_sender !== username">
             <div
               style="position: relative; left: 50%;width:max-content;transform: translate(-50%, 0);background-color: rgb(250, 250, 250);">
               {{ message.message_time }}
             </div>
             <div class="left_message_box">
               <div class="avatar_box">
-                <nut-avatar size="60" shape="square" :icon="doctor_avatar_url">
+                <nut-avatar size="60" shape="square" :icon="message.avatar">
                 </nut-avatar>
               </div>
               <div class="left_strings">
@@ -125,7 +151,7 @@ const export_session = function () {
                 {{ message.message_text }}
               </div>
               <div class="avatar_box">
-                <nut-avatar size="60" :icon="avatar_url" shape="square">
+                <nut-avatar size="60" :icon="message.avatar" shape="square">
                 </nut-avatar>
               </div>
 
@@ -135,39 +161,20 @@ const export_session = function () {
 
       </div>
       <!-- 占位置，确保最后一个消息框可以完全显示 -->
-
-      <div
-        style="position: relative; left: 50%;width:max-content;transform: translate(-50%, 0);background-color: rgb(250, 250, 250);">
-        <nut-skeleton width="160px" height="20px" title animated row="1" class="message" :loading="loading">
-        </nut-skeleton>
-      </div>
-      <nut-skeleton width="250px" height="15px" avatar-shape="square" title animated avatar avatarSize="60px" row="3"
-        class="message transX" :loading="loading">
-      </nut-skeleton>
-      <nut-skeleton width="250px" height="15px" avatar-shape="square" title animated avatar avatarSize="60px" row="3"
-        class="message" :loading="loading">
-      </nut-skeleton>
-
-      <div style="height:20px;"></div>
+      <div style="min-height:60px;"></div>
     </div>
+
     <div class="footer">
       <nut-searchbar v-model="messageText" @keyup.enter.native="send_message">
-        <template v-slot:leftout>
-          <nut-icon name="star" @click="export_session"></nut-icon>
-        </template>
         <template v-slot:rightout>
           <nut-icon name="top" @click="send_message"></nut-icon>
         </template>
       </nut-searchbar>
     </div>
 
-
-
-
-
   </div>
 </template>
-      
+
 <style scoped>
 .title {
   width: fit-content;
@@ -185,7 +192,7 @@ const export_session = function () {
 
 .button {
   /* width: fit-content; */
-  width: 100%;
+  width: 80%;
   margin-left: 50%;
   transform: translate(-50%, 0);
   /* border:1px solid red; */
@@ -212,18 +219,16 @@ const export_session = function () {
 }
 
 .footer {
-  width: 100%;
   position: absolute;
   bottom: 0px;
-  left: 0px;
   padding: 0px;
-  margin: 0px;
   height: 50px;
+  width: 100%;
 }
 
 .page {
   overflow: auto;
-  height: 95vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -232,7 +237,7 @@ const export_session = function () {
   position: relative;
   left: 5%;
   width: 90%;
-  height: 80px;
+  height: 120px;
   /* border: 1px solid red; */
   z-index: 2;
 }
@@ -318,8 +323,12 @@ const export_session = function () {
   right: 0px;
 }
 
-.transX {
-  transform: scaleX(-1);
+.above_footer {
+  position: absolute;
+  bottom: 65px;
+  padding: 0px;
+  height: 50px;
 }
 </style>
-      
+
+

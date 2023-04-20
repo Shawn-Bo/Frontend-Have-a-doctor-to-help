@@ -194,16 +194,32 @@ export const mark_publish_session = async function(username, session_id){
   return res;
 }
 
-export const update_doctor_inquery = async function(username, session_id, status){
+export const update_doctor_inquiry = async function(username, session_id, status){
   let res;
   await axios({
     method: "post",
-    url: base_url+"query/update_doctor_inquery",
+    url: base_url+"query/update_doctor_inquiry",
     timeout: 4000, // 请求4秒无响应则会超时
     data: {
       username: username,
       session_id: session_id,
       status: status
+    },
+  }).then(function(response){
+    res = response["data"];
+  }).catch((error) => console.error("请求超时"));
+  return res;
+}
+
+export const get_inquiry_not_viewed = async function(username, detailed=false){
+  let res;
+  await axios({
+    method: "post",
+    url: base_url+"query/get_inquiry_not_viewed",
+    timeout: 4000, // 请求4秒无响应则会超时
+    data: {
+      username: username,
+      detailed: detailed
     },
   }).then(function(response){
     res = response["data"];

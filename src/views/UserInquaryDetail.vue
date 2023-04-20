@@ -2,8 +2,11 @@
 import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
-import { query_export_session, query_get_exported_session, query_go_exported_session, update_doctor_inquery } from "../apis/query.js";
+import { query_export_session, query_get_exported_session, query_go_exported_session, update_doctor_inquiry } from "../apis/query.js";
 import { get_session_temp } from "../apis/session.js";
+
+import doctor_avatar_url from "../assets/doctor_avatar_url.png";
+
 const route = useRoute();
 const router = useRouter();
 let messageText = ref("");
@@ -15,7 +18,6 @@ let picked_doctor_id = ref(route.query.picked_doctor_id).value;
 let session_to_show = ref(get_session_temp());
 let avatar_url = (JSON.parse(localStorage.getItem('userinfo'))['avatar'] === null) ? 'https://pic1.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg' : JSON.parse(localStorage.getItem('userinfo'))['avatar'];
 let back = function () {
-
   clearInterval(message_interval);
   history.back();
 }
@@ -23,8 +25,9 @@ let username = localStorage.getItem("username"); // 获取用户名
 
 function get_exported_session() {
   query_get_exported_session(picked_session_id).then((res) => {
-    // console.log(res)
+    console.log(res);
     if (res["code"] === "success") {
+      console.log(res["session_json"]);
       session_to_show.value = JSON.parse(res["session_json"]);
     } else {
       Notify.warn("消息发送失败");
@@ -43,7 +46,7 @@ const send_message = () => {
       // 成功追加对话
       messageText.value = "";
       get_exported_session();  // 快速获取一次
-      update_doctor_inquery(picked_doctor_id, session_to_show.value.session_id, "not_viewed").then((res) => {
+      update_doctor_inquiry(picked_doctor_id, session_to_show.value.session_id, "not_viewed").then((res) => {
         if (res["code"] === "success") {
           // 说明医生那边有未查看通知了
         } else {
@@ -77,7 +80,7 @@ const export_session = function () {
       <div class="icon_left">
         <nut-icon name="left" @click="back" size="20"></nut-icon>
       </div>
-      <h2>快速问诊</h2>
+      <h2>名医问诊</h2>
       <div class="icon_top_right">
         <nut-icon name="message" size="24"></nut-icon>
       </div>
@@ -92,8 +95,7 @@ const export_session = function () {
             </div>
             <div class="left_message_box">
               <div class="avatar_box">
-                <nut-avatar size="60" shape="square"
-                  icon="https://img.ixintu.com/download/jpg/202008/24e3630a27f1b68d120b5bd190d6df92_610_610.jpg!con">
+                <nut-avatar size="60" shape="square" :icon="doctor_avatar_url">
                 </nut-avatar>
               </div>
               <div class="left_strings">

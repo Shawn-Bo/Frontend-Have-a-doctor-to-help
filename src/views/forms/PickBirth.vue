@@ -49,20 +49,6 @@ const confirm = ({ selectedValue, selectedOptions }) => {
 </template>
       
 <style scoped>
-.title {
-  width: fit-content;
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-  /* border:1px solid red; */
-}
-
-.button {
-  /* width: fit-content; */
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-  /* border:1px solid red; */
-}
-
 .title_forzen {
   position: relative;
   left: 5%;
@@ -82,12 +68,6 @@ const confirm = ({ selectedValue, selectedOptions }) => {
   top: 8px;
 }
 
-.photo {
-  width: fit-content;
-  margin-left: 50%;
-  transform: translate(-50%, 0);
-  /* border:1px solid red; */
-}
 
 * {
   margin: 0px;

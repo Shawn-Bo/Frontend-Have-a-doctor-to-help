@@ -1,6 +1,7 @@
 <!-- 展示医生信息的组件 -->
 
 <script setup>
+
 const props = defineProps({
   avatar: String,
   username: String,
@@ -25,10 +26,11 @@ const emits = defineEmits(['onQueryDetail'])
         </nut-avatar>
       </div>
       <div class="button">
-        <nut-button type="primary" size="small" class="button" @click="$emit('onQueryDetail')">👩‍⚕️求助医生👨‍⚕️</nut-button>
+        <nut-button type="info" size="small" shape="square" class="button"
+          @click="$emit('onQueryDetail')">👩‍⚕️求助医生👨‍⚕️</nut-button>
       </div>
       <div class="real_name">
-        <em>{{ real_name }}</em>
+        {{ real_name }}
       </div>
       <div class="career_year">
         从业<em>{{ career_year }}</em>年
@@ -38,7 +40,7 @@ const emits = defineEmits(['onQueryDetail'])
       <nut-icon name="location2" class="hospital_icon"></nut-icon>
       <div class="position">{{ position }}</div>
       <nut-icon name="people" class="position_icon"></nut-icon>
-      <div class="good_at">擅长：{{ good_at }}</div>
+      <div class="good_at">{{ good_at }}</div>
       <nut-icon name="success" class="good_at_icon"></nut-icon>
       <div class="we_chat">微信：{{ we_chat }}</div>
       <nut-icon name="comment" class="we_chat_icon"></nut-icon>
@@ -55,25 +57,20 @@ const emits = defineEmits(['onQueryDetail'])
     "avatar  position_icon position"
     "real_name  good_at_icon good_at"
     "button  we_chat_icon we_chat";
-  grid-template-columns: 14fr 1fr 20fr;
+  grid-template-columns: 20fr 1fr 30fr;
 
-  margin-top: 24px;
+  margin-top: 18px;
   padding-top: 8px;
   padding-bottom: 8px;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
 
   row-gap: 8px;
   column-gap: 12px;
-
-  background-color: white;
   justify-items: stretch;
 
-  border-radius: 8px;
-  border-right: 2px solid gray;
-  border-top: 2px solid gray;
-  border-left: 1px solid gray;
-  border-bottom: 1px solid gray;
+  border-radius: 4px;
+  border: 1px solid grey;
 
   /* font-family: YouYuan; */
 }
@@ -83,19 +80,15 @@ const emits = defineEmits(['onQueryDetail'])
   text-align: left;
   margin-bottom: auto;
   margin-top: auto;
-
+  font-weight: 400;
 }
 
 .avatar {
   grid-area: avatar;
   margin-left: auto;
   margin-right: auto;
-}
-
-.username {
-  grid-area: username;
-  margin-left: auto;
-  margin-right: auto;
+  border: 1px double snow;
+  border-radius: 50%;
 }
 
 .button {
@@ -108,10 +101,7 @@ const emits = defineEmits(['onQueryDetail'])
   grid-area: real_name;
   margin-left: auto;
   margin-right: auto;
-}
-
-.real_name_icon {
-  grid-area: real_name_icon;
+  font-weight: 600;
 }
 
 .career_year {
@@ -120,12 +110,14 @@ const emits = defineEmits(['onQueryDetail'])
 
 .career_year_icon {
   grid-area: career_year_icon;
+  color: rgb(2, 48, 107);
 }
 
 .career_year>em {
-  color: red;
+  color: rgb(46, 117, 241);
   font-weight: bolder;
   margin-right: 4px;
+
 }
 
 .hospital {
@@ -134,6 +126,7 @@ const emits = defineEmits(['onQueryDetail'])
 
 .hospital_icon {
   grid-area: hospital_icon;
+  color: rgb(2, 48, 107);
 }
 
 .position {
@@ -143,6 +136,7 @@ const emits = defineEmits(['onQueryDetail'])
 
 .position_icon {
   grid-area: position_icon;
+  color: rgb(2, 48, 107);
 }
 
 .good_at {
@@ -152,6 +146,7 @@ const emits = defineEmits(['onQueryDetail'])
 
 .good_at_icon {
   grid-area: good_at_icon;
+  /* color: rgb(2, 48, 107); */
   /* text-align: left; */
 }
 
@@ -161,5 +156,6 @@ const emits = defineEmits(['onQueryDetail'])
 
 .we_chat_icon {
   grid-area: we_chat_icon;
+  color: rgb(2, 48, 107);
 }
 </style>

@@ -2,7 +2,10 @@
 import { Notify } from '@nutui/nutui';
 import { ref } from 'vue';
 import { useRoute, useRouter } from "vue-router";
+import { user_get_avatar } from "../apis/me.js";
 import { query_delete_export_session, query_publish_session } from "../apis/query.js";
+
+import doctor_avatar_url from "../assets/doctor_avatar_url.png";
 const route = useRoute();
 const router = useRouter();
 let messageText = ref("");
@@ -48,6 +51,34 @@ const go_inquery = function () {
     }
   })
 }
+let counter_part_username = "";
+let counter_part_user_avatar = "";
+// 更新头像数据！
+const update_session_avatar = function () {
+  for (let i = 0, len = session_to_show.value["session_messages"].length; i < len; i++) {
+    let username_for_avatar = session_to_show.value["session_messages"][i]["message_sender"];
+    if (typeof (session_to_show.value["session_messages"][i]["avatar"]) !== "undefined") {
+      continue;
+    }
+    if (username_for_avatar === "robot") {
+      session_to_show.value["session_messages"][i]["avatar"] = doctor_avatar_url;
+    } else if (username_for_avatar === username) {
+      session_to_show.value["session_messages"][i]["avatar"] = avatar_url;
+    } else if (counter_part_user_avatar !== "") {
+      counter_part_username = username_for_avatar;
+      session_to_show.value["session_messages"][i]["avatar"] = counter_part_user_avatar;
+    } else {
+      counter_part_username = username_for_avatar;
+      user_get_avatar(username_for_avatar).then((res) => {
+        counter_part_user_avatar = res["data"];
+        session_to_show.value["session_messages"][i]["avatar"] = counter_part_user_avatar;
+      });
+    }
+  }
+}
+setTimeout(() => {
+  update_session_avatar();
+}, 100)
 
 </script>
 
@@ -66,15 +97,14 @@ const go_inquery = function () {
     <div class="body" ref="message_box">
       <div v-for="message in session_to_show.session_messages" :key="message.message_id">
         <div class="message">
-          <div v-if="message.message_sender === 'robot'">
+          <div v-if="message.message_sender !== username">
             <div
               style="position: relative; left: 50%;width:max-content;transform: translate(-50%, 0);background-color: rgb(250, 250, 250);">
               {{ message.message_time }}
             </div>
             <div class="left_message_box">
               <div class="avatar_box">
-                <nut-avatar size="60" shape="square"
-                  icon="https://img.ixintu.com/download/jpg/202008/24e3630a27f1b68d120b5bd190d6df92_610_610.jpg!con">
+                <nut-avatar size="60" shape="square" :icon="message.avatar">
                 </nut-avatar>
               </div>
               <div class="left_strings">

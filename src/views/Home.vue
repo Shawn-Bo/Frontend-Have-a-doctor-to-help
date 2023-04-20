@@ -3,8 +3,8 @@ import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { query_get_public_sessions } from "../apis/query.js";
 import HomeCard from "../components/HomeCard.vue";
+import MessageIcon from '../components/MessageIcon.vue';
 import SearchBar from '../components/SearchBar.vue';
-
 
 let router = useRouter();
 let session_list = ref([]);
@@ -32,7 +32,7 @@ const go_query_public_session_detail = function (index) {
     <div class="title_forzen">
       <h1>♨️热门问诊</h1>
       <div class="icon_top_right">
-        <nut-icon name="message" size="24"></nut-icon>
+        <MessageIcon></MessageIcon>
       </div>
     </div>
 
@@ -71,8 +71,7 @@ const go_query_public_session_detail = function (index) {
   position: relative;
   left: 5%;
   width: 90%;
-  height: 100px;
-  display: block;
+  height: 120px;
   z-index: 100;
   /* border: 1px solid red; */
 }

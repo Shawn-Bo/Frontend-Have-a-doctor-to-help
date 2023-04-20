@@ -14,7 +14,6 @@
       "border-style": "solid",
       "padding": "1px",
       "font-family": "Microsoft Yahei",
-      "text-valign": "left",
       "text-halign": "center",
       "text-background-color": "rgb(250,250,250)",
       "text-background-opacity": 0.8
@@ -32,70 +31,63 @@
       "line-cap": "round",
       "width": "6px",
       "text-background-color": "rgb(250,250,250)",
-      "text-background-opacity": 0.5
+      "text-background-opacity": 0.5,
+      "text-justification": "auto",
+      "text-rotation": "autorotate"
     }
   },
   {
     "selector": "edge[label='症状']",
     "css": {
-      "line-color": "red",
-      "font-size": "16px"
+      "line-color": "red"
     }
   },
   {
     "selector": "edge[label='并发症']",
     "css": {
-      "line-color": "orange",
-      "font-size": "16px"
+      "line-color": "orange"
     }
   },
   {
     "selector": "edge[label='推荐食谱']",
     "css": {
-      "line-color": "green",
-      "font-size": "16px"
+      "line-color": "green"
     }
   },
   {
     "selector": "edge[label='好评药品']",
     "css": {
-      "line-color": "blue",
-      "font-size": "16px"
+      "line-color": "blue"
     }
   },
   {
     "selector": "edge[label='治愈概率']",
     "css": {
-      "line-color": "blue",
-      "font-size": "16px"
+      "line-color": "blue"
     }
   },
   {
     "selector": "edge[label='治疗时长']",
     "css": {
-      "line-color": "blue",
-      "font-size": "16px"
+      "line-color": "blue"
     }
   },
   {
     "selector": "edge[label='治疗方法']",
     "css": {
-      "line-color": "blue",
-      "font-size": "16px"
+      "line-color": "blue"
     }
   },
   {
     "selector": "edge[label='易得人群']",
     "css": {
-      "line-color": "green",
-      "font-size": "16px"
+      "line-color": "green"
     }
   },
   {
     "selector": "edge[label='预防方法']",
     "css": {
-      "line-color": "green",
-      "font-size": "16px"
+      "line-color": "green"
     }
   }
 ]

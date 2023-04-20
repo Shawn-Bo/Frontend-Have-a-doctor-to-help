@@ -11,8 +11,6 @@ const props = defineProps({
 });
 
 const emits = defineEmits(['onQueryDetail'])
-
-
 </script>
 
 <template>
@@ -24,11 +22,10 @@ const emits = defineEmits(['onQueryDetail'])
       <div class="avatar"> <nut-avatar size="80" :icon="avatar" shape="round">
         </nut-avatar> </div>
       <div class="epoch_num"><em>{{ epoch_num }}</em>轮对话</div>
-      <div class="username"><em>{{ username }}</em></div>
-      <div class="start_time">{{ start_time.slice(2,).replace("年", "-").replace("月", "-").replace("日", " ").replace(" ",
-        "") }}
+      <div class="username">{{ username }}</div>
+      <div class="start_time">始 {{ start_time.slice(5,).replace("月", "-").replace("日", " ").replace(" ", "") }}
       </div>
-      <div class="end_time">{{ end_time.slice(2,).replace("年", "-").replace("月", "-").replace("日", " ").replace(" ",
+      <div class="end_time">止 {{ end_time.slice(5,).replace("月", "-").replace("日", " ").replace(" ",
         "") }}</div>
     </div>
   </div>
@@ -99,10 +96,10 @@ const emits = defineEmits(['onQueryDetail'])
 }
 
 .username {
+  font-family: "Microsoft YaHei";
   grid-area: username;
-  font-family: FangSong;
   font-size: large;
-  font-weight: bold;
+  font-weight: normal;
   color: rgb(29, 29, 29);
   margin-top: auto;
   margin-bottom: auto;
@@ -118,6 +115,7 @@ const emits = defineEmits(['onQueryDetail'])
   grid-area: start_time;
   margin-top: auto;
   margin-bottom: auto;
+  font-size: 16px;
 }
 
 .end_time {
